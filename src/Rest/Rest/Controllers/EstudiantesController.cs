@@ -22,7 +22,7 @@ namespace Rest.Controllers
             _estudianteRepositorio = estudianteRepositorio;
         }
 
-        [HttpGet("ConsultarPorDNI")]
+        [HttpGet("ConsultarPorDNI/{dni}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
