@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Instituto.Modelos;
+using Instituto.Modelos.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,10 @@ namespace Instituto.Mappers
         public EstudianteMapper()
         {
             CreateMap<CrearEstudianteDTO, Estudiante>();
+            CreateMap<Estudiante, EstudianteConsultaDefaultDTO>();
+            
+            // TODO
+            //CreateMap<IEnumerable<Estudiante>, IEnumerable<EstudianteConsultaDefaultDTO>>();
         }
     }
 }

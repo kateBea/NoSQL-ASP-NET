@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Instituto.Modelos;
+using Instituto.Modelos.DTO;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Driver;
@@ -24,7 +25,7 @@ namespace Instituto.Repositorios
             // NOTE: if the collection doesn’t already exist, the client will
             // automatically create it when we first try to access it.
 
-            var database = client.GetDatabase("MongoDBCS");
+            var database = client.GetDatabase("Instituto");
             var collection = database.GetCollection<Estudiante>(nameof(Estudiante));
 
             _estudiantes = collection;
@@ -55,26 +56,35 @@ namespace Instituto.Repositorios
             return result.DeletedCount > 0;
         }
 
-        public async Task<Estudiante?> ConsultarPorDNI(string dni)
+        public async Task<EstudianteConsultaDefaultDTO?> ConsultarPorDNI(string dni)
         {
             var filter = Builders<Estudiante>.Filter.Eq(estudiante => estudiante.DNI, dni);
-            Estudiante? estResult = await _estudiantes.Find(filter).FirstOrDefaultAsync();
+            Estudiante? est = await _estudiantes.Find(filter).FirstOrDefaultAsync();
+            EstudianteConsultaDefaultDTO? result = _estudianteMapper.Map<EstudianteConsultaDefaultDTO>(est);
 
-            return estResult;
+            return result;
         }
 
-        public async Task<Estudiante?> ConsultarPorID(ObjectId objectId)
+        public async Task<EstudianteConsultaDefaultDTO?> ConsultarPorID(ObjectId objectId)
         {
             var filter = Builders<Estudiante>.Filter.Eq(estudiante => estudiante.Id, objectId);
-            Estudiante? estResult = await _estudiantes.Find(filter).FirstOrDefaultAsync();
+            Estudiante? est = await _estudiantes.Find(filter).FirstOrDefaultAsync();
+            EstudianteConsultaDefaultDTO? result = _estudianteMapper.Map<EstudianteConsultaDefaultDTO>(est);
 
-            return estResult;
+            return result;
         }
 
-        public async Task<IEnumerable<Estudiante>> ConsultarTodos()
+        public async Task<IEnumerable<EstudianteConsultaDefaultDTO>> ConsultarTodos()
         {
+            List<EstudianteConsultaDefaultDTO> result = new List<EstudianteConsultaDefaultDTO>();
             var estudiantes = await _estudiantes.Find(_ => true).ToListAsync();
-            return estudiantes;
+            
+            foreach (var estudiante in estudiantes)
+            {
+                result.Add(_estudianteMapper.Map<EstudianteConsultaDefaultDTO>(estudiante));
+            }
+
+            return result;
         }
 
         public async Task<ObjectId> Insertar(CrearEstudianteDTO est)

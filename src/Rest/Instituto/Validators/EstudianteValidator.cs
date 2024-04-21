@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Instituto.Modelos;
+using Instituto.Modelos.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;

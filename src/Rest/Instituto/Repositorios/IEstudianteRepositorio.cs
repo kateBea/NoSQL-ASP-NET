@@ -1,4 +1,5 @@
 ﻿using Instituto.Modelos;
+using Instituto.Modelos.DTO;
 using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,9 @@ namespace Instituto.Repositorios
         Task<ObjectId> Insertar(CrearEstudianteDTO est);
 
         // Read
-        Task<Estudiante?> ConsultarPorID(ObjectId objectId);
-        Task<IEnumerable<Estudiante>> ConsultarTodos();
-        Task<Estudiante?> ConsultarPorDNI(string dni);
+        Task<EstudianteConsultaDefaultDTO?> ConsultarPorID(ObjectId objectId);
+        Task<IEnumerable<EstudianteConsultaDefaultDTO>> ConsultarTodos();
+        Task<EstudianteConsultaDefaultDTO?> ConsultarPorDNI(string dni);
 
         // Update
         Task<bool> Actualizar(CrearEstudianteDTO est);

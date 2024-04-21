@@ -1,6 +1,6 @@
 using FluentValidation;
 using Instituto.Mappers;
-using Instituto.Modelos;
+using Instituto.Modelos.DTO;
 using Instituto.Repositorios;
 using Instituto.Validators;
 using Microsoft.Extensions.Configuration;

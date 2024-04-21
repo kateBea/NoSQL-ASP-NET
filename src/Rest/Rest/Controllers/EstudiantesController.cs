@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using Instituto.Modelos;
+using Instituto.Modelos.DTO;
 using Instituto.Repositorios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,8 +27,8 @@ namespace Rest.Controllers
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Estudiante))]
-        public async Task<ActionResult<Estudiante>> ConsultarPorDNI([FromRoute] string dni)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EstudianteConsultaDefaultDTO))]
+        public async Task<ActionResult<EstudianteConsultaDefaultDTO>> ConsultarPorDNI([FromRoute] string dni)
         {
             var result = await _estudianteRepositorio.ConsultarPorDNI(dni);
 
@@ -42,8 +43,8 @@ namespace Rest.Controllers
         [HttpGet("ConsultarTodos")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Estudiante))]
-        public async Task<ActionResult<Estudiante>> ConsultarTodos()
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EstudianteConsultaDefaultDTO))]
+        public async Task<ActionResult<EstudianteConsultaDefaultDTO>> ConsultarTodos()
         {
             var result = await _estudianteRepositorio.ConsultarTodos();
             return Ok(result);
@@ -53,7 +54,7 @@ namespace Rest.Controllers
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Estudiante))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ObjectId))]
         public async Task<ActionResult<ObjectId>> Insertar([FromBody] CrearEstudianteDTO nuevo)
         {
             var validationResult = _validatorEstudiante.Validate(nuevo);
@@ -71,7 +72,7 @@ namespace Rest.Controllers
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Estudiante))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ObjectId))]
         public async Task<ActionResult<ObjectId>> Actualizar([FromBody] CrearEstudianteDTO nuevo)
         {
             var validationResult = _validatorEstudiante.Validate(nuevo);
@@ -92,12 +93,12 @@ namespace Rest.Controllers
             }
         }
 
-        [HttpDelete("BorrarPorID")]
+        [HttpDelete("BorrarPorID/{id}")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Estudiante))]
-        public async Task<ActionResult<Estudiante>> BorrarPorID([FromRoute] ObjectId id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EstudianteConsultaDefaultDTO))]
+        public async Task<ActionResult<EstudianteConsultaDefaultDTO>> BorrarPorID([FromRoute] ObjectId id)
         {
             var result = await _estudianteRepositorio.BorrarPorID(id);
 
